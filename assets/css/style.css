@@ -1,0 +1,54 @@
+.container {
+    margin: auto;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+  }
+  
+  .welcome {
+    margin-bottom: 20px;
+    font-weight: bolder;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  button {
+    background-color: indigo;
+    padding: 10px;
+    color: white;
+    border-radius: 5%;
+    font-size: large;
+  }
+
+  nav {
+      color: magenta;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      padding-bottom: 20px;
+      margin-bottom: 40px;
+  }
+
+  h2 {
+      color: indigo;
+      font-size: large;
+      text-align: right;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  
+  #main {
+    margin-bottom: 20px;
+    font-size: 100px;
+    width: 100%;
+    height: 25px;
+  }
+  
+  #read {
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+    height: 25px;
+  }
+
+  footer {
+      margin-top: 100px;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
