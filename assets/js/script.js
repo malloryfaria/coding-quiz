@@ -32,6 +32,7 @@ var score = 0;
 var questionIndex = 0;
 
 var timeLeft = 90;
+var timeInterval = "";
 var timerEl = document.getElementById("countdown");
 var mainEl = document.getElementById("mainGame");
 var startBtn = document.getElementById("start");
@@ -71,6 +72,7 @@ var divCreateEl = document.createElement("div");
 
         function compareAnswer(event) {
             var element = event.target;
+            console.log(element);
 
             if (element.matches("button")) {
 
@@ -90,10 +92,10 @@ var divCreateEl = document.createElement("div");
             // move on to the next question
             questionIndex ++;
 
-            // check if that was the last question
+            // check if quiz is done (either if it was the last question or time is up)
             if (questionIndex >= questions.length) {
                 quizComplete();
-                createDiv.textContent = "Quiz complete! Your score was: " + score;    
+                createDiv.textContent = "Quiz complete! You got " + score + " answers correct.";    
                 }
                 else {
                     startQuiz(questionIndex);                    
@@ -104,17 +106,87 @@ var divCreateEl = document.createElement("div");
         // Quiz complete function
         function quizComplete() {
             mainEl.innerHTML = "";
-            timeLeft = "";
-        }
+            stopCountdown();
 
-    // GIVEN I am taking a code quiz WHEN I click the start button THEN a timer starts and I am presented with a question
+            // Add a heading element to let user know the quiz is done
+            var h1El = document.createElement("h1");
+            h1El.setAttribute("id", "h1El");
+            h1El.textContent = "All done!"
+
+            mainEl.appendChild(h1El);
+
+            // Add a Paragraph element
+            var pEl = document.createElement("p");
+            pEl.setAttribute("id", "pEl");
+
+            mainEl.appendChild(pEl);
+
+            // Calculates time remaining and replaces it with score
+            if (timeLeft >= 0) {
+                var timeRemaining = timeLeft;
+                var pEl2 = document.createElement("p");
+                pEl2.textContent = "Your final score is: " + timeRemaining;
+                mainEl.appendChild(pEl2);
+            }
+
+            // add a Label element for the high score initials
+            var createLabel = document.createElement("label");
+            createLabel.setAttribute("id", "createLabel");
+            createLabel.textContent = "Enter your initials: ";
+
+            mainEl.appendChild(createLabel);
+
+            // add an input so user can input their initials
+            var createInput = document.createElement("input");
+            createInput.setAttribute("type", "text");
+            createInput.setAttribute("id", "initials");
+            createInput.textContent = "";
+
+            mainEl.appendChild(createInput);
+
+            // add a submit button for high score capture
+            var createSubmit = document.createElement("button");
+            createSubmit.setAttribute("type", "submit");
+            createSubmit.setAttribute("id", "Submit");
+            createSubmit.textContent = "Submit";
+
+            mainEl.appendChild(createSubmit);
+
+
+            // adding the high score to the local storage
+            createSubmit.addEventListener("click", function () {
+                var initials = createInput.value;
+        
+                if (initials === null) {
+                    alert("You must enter your initials!")        
+                    console.log("No value entered!");
+        
+                } else {
+                    var finalScore = {
+                        initials: initials,
+                        score: timeRemaining
+                    }
+                    console.log(finalScore);
+                    var allScores = localStorage.getItem("allScores");
+                    if (allScores === null) {
+                        allScores = [];
+                    } else {
+                        allScores = JSON.parse(allScores);
+                    }
+                    allScores.push(finalScore);
+                    var newScore = JSON.stringify(allScores);
+                    localStorage.setItem("allScores", newScore);
+                }
+            });
+        
+        };
+
         // timer function
-        // TODO: Timer that counts down from 90
         function countdown() {        
             // Use the setInterval() method to call a function to be executed every 1000 milliseconds (every 1 second)
-            var timeInterval = setInterval(function() {
+            timeInterval = setInterval(function() {
             if(timeLeft >= 1) {
-                timerEl.textContent = timeLeft;
+                timerEl.textContent = "time remaining:  " + timeLeft;
                 timeLeft -= 1;
             }
             else if(timeLeft === 0){
@@ -127,16 +199,15 @@ var divCreateEl = document.createElement("div");
             function displayMessage() {
                 alert(timeIsUpMessage);
             };
-  }, 1000)
-}
+            }, 1000)
+        }
+
+            // stop timer function
+            function stopCountdown() {
+            clearInterval(timeInterval);
+            console.log("countdown stopped");
+            }
 
 
-// WHEN I answer a question THEN I am presented with another question
 
-// WHEN I answer a question incorrectly THEN time is subtracted from the clock
 
-// WHEN all questions are answered or the timer reaches 0
-
-// THEN the game is over
-
-// WHEN the game is over THEN I can save my initials and score
