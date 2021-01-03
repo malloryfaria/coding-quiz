@@ -1,3 +1,16 @@
+// Declare the variables 
+var score = 0;
+var questionIndex = 0;
+
+var timeLeft = 90;
+var timeInterval = "";
+var timerEl = document.getElementById("countdown");
+var mainEl = document.getElementById("mainGame");
+var startBtn = document.getElementById("start");
+var timeIsUpMessage = "You have run out of time!";
+var penalty = "10";
+var createOption = document.createElement("ul");
+
     // questions index
     var questions = [
         {
@@ -17,7 +30,7 @@
         },
         {
             title: "String values must be enclosed within ____ when being assigned to variables.",
-            choices: ["commas", "curly brackets", "quotes", "parenthesis"],
+            choices: ["commas", "curly brackets", "quotes", "parentheses"],
             answer: "quotes"
         },
         {
@@ -27,20 +40,6 @@
         },
     ]; 
 
-// Declare the variables 
-var score = 0;
-var questionIndex = 0;
-
-var timeLeft = 90;
-var timeInterval = "";
-var timerEl = document.getElementById("countdown");
-var mainEl = document.getElementById("mainGame");
-var startBtn = document.getElementById("start");
-var timeIsUpMessage = "You have run out of time!";
-var penalty = "10";
-var ulCreateEl = document.createElement("ul");
-var divCreateEl = document.createElement("div");
-
     // Display question to the user & starts the countdown
     startBtn.addEventListener("click", function() {
         countdown();
@@ -49,7 +48,7 @@ var divCreateEl = document.createElement("div");
 
     function startQuiz(questionIndex) {
         // Clear the screen
-            ulCreateEl.innerHTML = "";
+            createOption.innerHTML = "";
             mainEl.innerHTML = "";
         
         // Loop to go through all the questions
@@ -64,8 +63,8 @@ var divCreateEl = document.createElement("div");
             var optionList = document.createElement("button");
             optionList.textContent = newButton;
             optionList.setAttribute("id", "choices");
-            mainEl.appendChild(ulCreateEl);
-            ulCreateEl.appendChild(optionList);
+            mainEl.appendChild(createOption);
+            createOption.appendChild(optionList);
             optionList.addEventListener("click", (compareAnswer));
         })
         };
@@ -157,7 +156,7 @@ var divCreateEl = document.createElement("div");
             createSubmit.addEventListener("click", function () {
                 var initials = createInput.value;
         
-                if (initials === null) {
+                if (!initials) {
                     alert("You must enter your initials!")        
                     console.log("No value entered!");
         
@@ -194,6 +193,7 @@ var divCreateEl = document.createElement("div");
                 clearInterval(timeInterval);
                 console.log("I'm here");
                 displayMessage();
+                quizComplete();
             }
         
             function displayMessage() {
@@ -205,7 +205,9 @@ var divCreateEl = document.createElement("div");
             // stop timer function
             function stopCountdown() {
             clearInterval(timeInterval);
+            timerEl.textContent = "Time is up!"
             console.log("countdown stopped");
+            console.log(timeInterval);
             }
 
 
