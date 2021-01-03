@@ -1,103 +1,116 @@
+    // questions index
+    var questions = [
+        {
+            title: "Commonly used data types DO NOT include:",
+            choices: ["strings", "booleans", "alerts", "numbers"],
+            answer: "alerts"
+        },
+        {
+            title: "The condition in an if / else statement is enclosed within ____.",
+            choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
+            answer: "parentheses"
+        },
+        {
+            title: "Arrays in Javascript can be used to store ____.",
+            choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+            answer: "all of the above"
+        },
+        {
+            title: "String values must be enclosed within ____ when being assigned to variables.",
+            choices: ["commas", "curly brackets", "quotes", "parenthesis"],
+            answer: "quotes"
+        },
+        {
+            title: "A very useful tool used during development and debugging for printing content to the debugger is:",
+            choices: ["Javascript", "terminal / bash", "for loops", "console log"],
+            answer: "console log"
+        },
+    ]; 
+
 // Declare the variables 
 var score = 0;
 var questionIndex = 0;
+
+var timeLeft = 90;
 var timerEl = document.getElementById("countdown");
 var mainEl = document.getElementById("mainGame");
 var startBtn = document.getElementById("start");
-var message = "You have run out of time!";
+var timeIsUpMessage = "You have run out of time!";
 var penalty = "10";
+var ulCreateEl = document.createElement("ul");
+var divCreateEl = document.createElement("div");
 
-startQuiz();
+    // Display question to the user & starts the countdown
+    startBtn.addEventListener("click", function() {
+        countdown();
+        startQuiz(questionIndex);
+    });
 
-    // questions index
-        var questions = [
-            {
-                title: "Commonly used data types DO NOT include:",
-                choices: ["strings", "booleans", "alerts", "numbers"],
-                answer: "alerts"
-            },
-            {
-                title: "The condition in an if / else statement is enclosed within ____.",
-                choices: ["quotes", "curly brackets", "parentheses", "square brackets"],
-                answer: "parentheses"
-            },
-            {
-                title: "Arrays in Javascript can be used to store ____.",
-                choices: ["numbers and strings", "other arrays", "booleans", "all of the above"],
-                answer: "all of the above"
-            },
-            {
-                title: "String values must be enclosed within ____ when being assigned to variables.",
-                choices: ["commas", "curly brackets", "quotes", "parenthesis"],
-                answer: "quotes"
-            },
-            {
-                title: "A very useful tool used during development and debugging for printing content to the debugger is:",
-                choices: ["Javascript", "terminal / bash", "for loops", "console log"],
-                answer: "console log"
-            },
-        ]; 
-
-    // Display question to the user
     function startQuiz(questionIndex) {
-        // Clear existing question from the page
-        mainEl.innerHTML = "";
-
+        // Clear the screen
+            ulCreateEl.innerHTML = "";
+            mainEl.innerHTML = "";
+        
         // Loop to go through all the questions
-        for(var i = 0; i < questions.length; i++) {
+        for (var i = 0; i < questions.length; i++) {
             // display the selected question title
-            var title = document.createElement("div");
-            title.setAttribute("id", "title");
-            title.textContent = questions[questionIndex].title;
-            // display the selected question's choices
-            var choices = document.createElement("li");
-            choices.setAttribute("id", "choices");
-            choices.textContent = questions[questionIndex].choices;
-            // add the content to the page
-            mainEl.textContent = title;
-            mainEl.textContent = choices;
+            var questionTitle = questions[questionIndex].title;
+            var questionChoices = questions[questionIndex].choices;
+            // add the Question title to the page
+            mainEl.textContent= questionTitle;
         }
-            mainEl.appendChild(document.createElement("li"));
-            choices.addEventListener("click", (compareAnswer));
-            return;
+        questionChoices.forEach(function (newButton) {
+            var optionList = document.createElement("button");
+            optionList.textContent = newButton;
+            optionList.setAttribute("id", "choices");
+            mainEl.appendChild(ulCreateEl);
+            ulCreateEl.appendChild(optionList);
+            optionList.addEventListener("click", (compareAnswer));
+        })
         };
 
         function compareAnswer(event) {
             var element = event.target;
-            if (element.matches("li")) {
+
+            if (element.matches("button")) {
+
                 var createDiv = document.createElement("div");
                 createDiv.setAttribute("id", "createDiv");
                 // If answer is correct
-                if (element.textContent === questions[questionIndex].answer) {
+                if (element.textContent == questions[questionIndex].answer) {
                     score ++;
-                    createDiv.textContent = "That is correct!"
+                    alert("That is correct! The answer is: " + questions[questionIndex].answer);
                 }
                 else {
                     // If answer is incorrect, remove 10 seconds from the timer
-                    timerEl = timerEl - penalty;
-                    createDiv.textContent = "That is incorrect! The correct answer is: " + questions[questionIndex].answer;
+                    timeLeft = timeLeft - penalty;
+                    alert("That is incorrect! The correct answer is: " + questions[questionIndex].answer);
                 }
             }
             // move on to the next question
             questionIndex ++;
 
-
-            function quizComplete () {
-                if (questionIndex >= questions.length) {
-                    createDiv.textContent = "Quiz complete! Your score was: " + score;    
+            // check if that was the last question
+            if (questionIndex >= questions.length) {
+                quizComplete();
+                createDiv.textContent = "Quiz complete! Your score was: " + score;    
                 }
                 else {
-                    mainEl.appendChild(createDiv);
+                    startQuiz(questionIndex);                    
                 }
-            }
-        };
+                mainEl.appendChild(createDiv);
+        }
+
+        // Quiz complete function
+        function quizComplete() {
+            mainEl.innerHTML = "";
+            timeLeft = "";
+        }
 
     // GIVEN I am taking a code quiz WHEN I click the start button THEN a timer starts and I am presented with a question
         // timer function
         // TODO: Timer that counts down from 90
-        function countdown() {
-            var timeLeft = 20;
-        
+        function countdown() {        
             // Use the setInterval() method to call a function to be executed every 1000 milliseconds (every 1 second)
             var timeInterval = setInterval(function() {
             if(timeLeft >= 1) {
@@ -112,8 +125,11 @@ startQuiz();
             }
         
             function displayMessage() {
-                alert(message);
-            }
+                alert(timeIsUpMessage);
+            };
+  }, 1000)
+}
+
 
 // WHEN I answer a question THEN I am presented with another question
 
@@ -124,10 +140,3 @@ startQuiz();
 // THEN the game is over
 
 // WHEN the game is over THEN I can save my initials and score
-
-  }, 1000)
-}
-
-
-
-startBtn.onclick = countdown;
