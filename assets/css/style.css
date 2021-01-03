@@ -117,14 +117,11 @@ nav {
       margin-bottom: 40px;
   }
 
-  ul {
+  #high-score {
       color: indigo;
-      font-size: medium;
+      font-size: large;
       font-weight: bold;
   }
-
-  
-
   
   #read {
     margin: auto;
