@@ -175,6 +175,9 @@ var createOption = document.createElement("ul");
                     allScores.push(finalScore);
                     var newScore = JSON.stringify(allScores);
                     localStorage.setItem("allScores", newScore);
+
+                    // bring user to high score page
+                    window.location.replace("./highscores.html");
                 }
             });
         

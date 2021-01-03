@@ -1,3 +1,15 @@
+#main {
+    margin-bottom: 20px;
+    width: 100%;
+    height: 25px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  #mainGame {
+      font-weight: bolder;
+      font-size: x-large;
+  }
+
 .container {
     margin: auto;
     width: 100%;
@@ -19,7 +31,7 @@
       background-color: indigo;
       padding: 10px;
       color: white;
-      border-radius: 5%;
+      border-radius: 10%;
       font-size: larger;
       margin: 20px;
   }
@@ -71,15 +83,27 @@
 
   }
 
+ #go-back, #clear-scores {
+      font-size: small;
+      margin: 5px;
+  }
+
   h2 {
-    color: indigo;
+    color: black;
+    font-size: small;
+    text-align: right;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h3 {
+    color: black;
     font-size: small;
     text-align: center;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 nav {
-    color: indigo;
+    color: black;
     text-shadow: rgb(243, 89, 197);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-bottom: 20px;
@@ -92,14 +116,15 @@ nav {
       padding-bottom: 20px;
       margin-bottom: 40px;
   }
-  
-  #main {
-    margin-bottom: 20px;
-    font-size: 100px;
-    width: 100%;
-    height: 25px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  ul {
+      color: indigo;
+      font-size: medium;
+      font-weight: bold;
   }
+
+  
+
   
   #read {
     margin: auto;
